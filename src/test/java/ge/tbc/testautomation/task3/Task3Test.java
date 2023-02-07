@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import java.util.Random;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class Task3Test {
@@ -59,6 +60,8 @@ public class Task3Test {
         response.then().assertThat().body("MRData.CircuitTable.Circuits[-1].Location.country", equalTo("UAE"));
 
         double lastCircuitLong = Double.parseDouble(response.jsonPath().get("MRData.CircuitTable.Circuits[-1].Location.long"));
+
+        assertThat(lastCircuitLong, anyOf(greaterThan(1.0), equalTo(10.0)));
         softAssert.assertTrue(lastCircuitLong > 1 || lastCircuitLong==10);
 
     }
